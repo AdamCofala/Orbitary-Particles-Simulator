@@ -8,6 +8,9 @@ private:
     sf::CircleShape s;
 
     float max_speed = 15.0f;
+    sf::Color Col;
+
+    bool isDead = false;
 
 public:
     Particle(float pos_x, float pos_y, float vel_x, float vel_y) {
@@ -27,6 +30,18 @@ public:
         wind.draw(s);
     }
 
+    sf::Vector2f getPos() const {
+        return pos;
+    }
+
+    sf::Color getCol() const {
+        return Col;
+    }
+
+    bool getDeath() const {
+        return isDead;
+    }
+
     void Update_Color() {
         // Calculate the speed (magnitude of the velocity vector)
         float speed = sqrt(vel.x * vel.x + vel.y * vel.y);
@@ -43,13 +58,11 @@ public:
         int b = static_cast<int>(255 * (1.0f - normalized_speed));  // Blue decreases with speed
         int g = 0;  // Green stays at 0 for the gradient
 
-        // Set the color based on speed
-        s.setFillColor(sf::Color(r, g, b));
+        Col = sf::Color(r, g, b);
     }
 
-    bool outOfWindow() {
-        if (pos.x<0 || pos.x>window_h || pos.y<0 || pos.y>window_w) return true;
-        return false;
+    void outOfWindow() {
+        if (pos.x<0 || pos.x>window_h || pos.y<0 || pos.y>window_w) isDead = true;
     }
 
 
@@ -88,6 +101,5 @@ public:
 
         pos.x += vel.x;
         pos.y += vel.y;
-
     }
 };

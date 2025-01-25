@@ -15,28 +15,29 @@ int main()
 
    
     std::vector<GravitySource> sources;
-    //sources.push_back(GravitySource(278, 450, gravityStrength));
-    //sources.push_back(GravitySource(666, 450, gravityStrength));
-
     std::vector<Particle> particles;
-    // Outside the game loop
+    particles.reserve(100000);
+
+
     sf::Clock frameClock;
     unsigned int fps = 0;
-    std::stringstream debugStream;  // For formatting the debug text
 
     sf::Font font("arial.ttf");
     sf::Text text(font);
-    
+
+  
 
     while (window.isOpen())
     {
-        // Inside the game loop
+       
         sf::Time frameTime = frameClock.restart();
         float deltaTime = frameTime.asSeconds();
         fps = 1 / deltaTime;
 
-      deltaTime = 0.5;
-      window.setFramerateLimit(60);
+
+        //smother animations -- normally dont do that
+        deltaTime = 0.5;
+        if(fpsCap) window.setFramerateLimit(60);
 
         // Event handling
         while (const std::optional event = window.pollEvent())
@@ -82,6 +83,11 @@ int main()
                 colision = colision - 1;
             }
 
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F))
+            {
+                fpsCap = fpsCap - 1;
+            }
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
             {
                 num_particles += 100;
@@ -123,45 +129,53 @@ int main()
 
         }
 
+       
         window.clear();
 
+
+        unsigned int counter = 0;
         // Update particle physics and colors
         for (int i = 0; i < sources.size(); i++) {
             sources[i].updateStrength(gravityStrength);
             for (int j = 0; j < particles.size(); j++)
             {
-                if (particles[j].outOfWindow() && !colision) {
-                    if (particles.begin() + j < particles.end()) particles.erase(particles.begin() + j);
-                }
-                else {
-                    particles[j].update_physics(sources[i], deltaTime);
-                    particles[j].Update_Color();
-                }
+             
+                if (!colision) particles[j].outOfWindow();
+
+              if (!particles[j].getDeath()) {
+                  counter++;
+                  particles[j].update_physics(sources[i], deltaTime);
+                  particles[j].Update_Color();
+              }          
+    
             }
-        }
+           
+        } 
 
         // Render gravity sources
         for (int i = 0; i < sources.size(); i++) {
             sources[i].render(window);
         }
 
-        // Render particles
-        for (int j = 0; j < particles.size(); j++)
-        {
-            particles[j].render(window);
+        sf::VertexArray points(sf::PrimitiveType::Points);
+        for (const auto& p : particles) {
+            points.append(sf::Vertex(p.getPos(),p.getCol()));
         }
+        window.draw(points);
+
 
        
         text.setString(" FPS: "+std::to_string(fps)
             +"\n Num Particles: " + std::to_string(num_particles)
-            + "\n Particles: " + std::to_string(particles.size())
+            + "\n Particles: " + std::to_string(counter)
             + "\n Gravity Strength: " + std::to_string(gravityStrength)
             + "\n Collision: " + std::to_string(colision)
+            + "\n FPScap: " + std::to_string(fpsCap)
         );
+
         window.draw(text);
         
         window.display();
     }
-
     return 0;
 }
