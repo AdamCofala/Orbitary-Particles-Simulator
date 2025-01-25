@@ -1,6 +1,10 @@
-unsigned int window_h = 1000;
-unsigned int window_w = 900;
-int gravityStrength = 5000;
+#ifndef SETTINGS_HPP
+#define SETTINGS_HPP
 
-int num_particles = 1000;
-bool colision = true;
+extern unsigned int window_h;
+extern unsigned int window_w;
+extern int gravityStrength;
+extern int num_particles;
+extern bool colision;
+
+#endif

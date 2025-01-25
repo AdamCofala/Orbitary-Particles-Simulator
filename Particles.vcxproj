@@ -136,9 +136,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Particles.cpp" />
+    <ClCompile Include="gravitySource.hpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="particle.hpp" />
+    <ClInclude Include="Settings.cpp" />
     <ClInclude Include="Settings.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
