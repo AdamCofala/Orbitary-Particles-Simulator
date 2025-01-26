@@ -83,9 +83,9 @@ int main()
                 colision = colision - 1;
             }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F))
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
             {
-                fpsCap = fpsCap - 1;
+                sources.clear();
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
@@ -157,6 +157,7 @@ int main()
             sources[i].render(window);
         }
 
+        
         sf::VertexArray points(sf::PrimitiveType::Points);
         for (const auto& p : particles) {
             points.append(sf::Vertex(p.getPos(),p.getCol()));

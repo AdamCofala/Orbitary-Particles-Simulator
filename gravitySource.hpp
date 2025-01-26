@@ -14,7 +14,7 @@ public:
         pos.y = pos_y;
         this->strength = strength;
 
-        s.setPosition(pos);
+        s.setPosition({pos.x-10,pos.y-10});
         s.setFillColor(sf::Color::White);
         s.setRadius(10);
     }

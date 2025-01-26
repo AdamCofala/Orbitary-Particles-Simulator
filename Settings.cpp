@@ -6,4 +6,4 @@ int gravityStrength = 5000;
 
 int num_particles = 1000;
 bool colision = true;
-bool fpsCap = false;
+bool fpsCap = true;
