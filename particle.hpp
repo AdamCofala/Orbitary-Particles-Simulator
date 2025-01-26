@@ -1,11 +1,11 @@
 #include "gravitySource.hpp"
+#include <cmath>
 
 
 class Particle {
 private:
     sf::Vector2f pos;
     sf::Vector2f vel;
-    sf::CircleShape s;
 
     float max_speed = 15.0f;
     sf::Color Col;
@@ -18,16 +18,6 @@ public:
         pos.y = pos_y;
         vel.x = vel_x;
         vel.y = vel_y;
-
-
-        s.setPosition(pos);
-        s.setFillColor(sf::Color::White);
-        s.setRadius(3);
-    }
-
-    void render(sf::RenderWindow& wind) {
-        s.setPosition(pos);
-        wind.draw(s);
     }
 
     sf::Vector2f getPos() const {
@@ -73,17 +63,17 @@ public:
         float distance_y = s.get_pos().y - pos.y;
 
         float distance = sqrt((distance_x * distance_x) + (distance_y * distance_y));
-
+      
+         
         float inverse_distance = 1.0f / distance;
-
+         
         float normalized_x = inverse_distance * distance_x;
         float normalized_y = inverse_distance * distance_y;
-
+        
         float inverse_square_dropoff = inverse_distance * inverse_distance;
-
+        
         float acceleration_x = normalized_x * s.get_strength() * deltaTime * inverse_square_dropoff;
         float acceleration_y = normalized_y * s.get_strength() * deltaTime * inverse_square_dropoff;
-
 
         vel.x += acceleration_x;
         vel.y += acceleration_y;
