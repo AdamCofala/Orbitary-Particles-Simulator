@@ -44,10 +44,10 @@ Orbital Gravity Simulation is a real-time particle physics simulation using SFML
 The gravitational force is simplified using the inverse square law, where the acceleration is proportional to the inverse square of the distance between a particle and a gravity source. The force is calculated as:
 
 $$
-a_x = \frac{G \cdot \text{strength} \cdot \text{distance}_x}{r^3} \times \Delta t
+a_x = \frac{G \cdot \text{strength} \cdot \text{distance}_x}{r^2} \times \Delta t
 $$
 $$
-a_y = \frac{G \cdot \text{strength} \cdot \text{distance}_y}{r^3} \times \Delta t
+a_y = \frac{G \cdot \text{strength} \cdot \text{distance}_y}{r^2} \times \Delta t
 $$
 
 #### 2. **Distance Calculation**
